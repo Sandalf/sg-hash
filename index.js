@@ -1,5 +1,6 @@
-const tests = 10;
-const stringLength = 6;
+const tests = 1000000;
+const stringLength = 4;
+const constant = 97;
 const testStrings = new Set();
 const hashes = new Set();
 let collisions = 0;
@@ -11,9 +12,8 @@ while(testStrings.size < tests) {
 console.log("done");
 
 console.log("Making hashes...");
-testStrings.forEach(string => {
-    // const s = hash(string); 
-    const shash = hash(string);    
+testStrings.forEach(string => { 
+    const shash = hash(string, constant);    
     if (hashes.has(shash)) {
         collisions++;
     }  
@@ -26,8 +26,8 @@ console.log("Strings: ", testStrings.size);
 console.log("Collisions: ", collisions);
 
 function makeRandomString(length) {
-    var result           = "";
-    var characters       = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var result = "";
+    var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     var charactersLength = characters.length;
     for ( var i = 0; i < length; i++ ) {
        result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -35,8 +35,7 @@ function makeRandomString(length) {
     return result;
 }
 
-function hash(string) {
-    const g = 73;
+function hash(string, g = 79) {
     let hash = 0;
 
     for (let i = 0; i < string.length; i++) {
